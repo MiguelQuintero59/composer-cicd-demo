@@ -25,9 +25,9 @@ with DAG(
 
     load_raw_data = GCSToBigQueryOperator(
         task_id="load_raw_data",
-        bucket="your-gcs-bucket-name",
-        source_objects=["raw/customers/*.csv"],
-        destination_project_dataset_table="your_project.raw_dataset.customers_raw",
+        bucket="raw-loan-transactions",
+        source_objects=["raw-loan-transactions/*.csv"],
+        destination_project_dataset_table="globant-technical-01.data_ingestion",
         source_format="CSV",
         skip_leading_rows=1,
         autodetect=True,
@@ -39,14 +39,10 @@ with DAG(
         configuration={
             "query": {
                 "query": """
-                    CREATE OR REPLACE TABLE `your_project.analytics.customers_clean` AS
+                    CREATE OR REPLACE TABLE `globant-technical-01.data_ingestion` AS
                     SELECT
-                        customer_id,
-                        customer_name,
-                        email,
-                        CURRENT_TIMESTAMP() AS processed_at
-                    FROM `your_project.raw_dataset.customers_raw`
-                    WHERE customer_id IS NOT NULL
+                        *
+                    FROM `globant-technical-01.data_ingestion`
                 """,
                 "useLegacySql": False,
             }
