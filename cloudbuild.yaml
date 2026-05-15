@@ -1,11 +1,11 @@
 steps:
-  - name: "python 3.12"
+  - name: "python:3.11"
     entrypoint: "bash"
     args:
       - "-c"
       - |
-      pip install -r requirements.txt
-      pytest test/
+        pip install -r requirements.txt
+        pytest tests/
 
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
     entrypoint: "bash"
